@@ -1,5 +1,5 @@
-
 Comments
+     "Changed to Chem-UCI-MAM5 by Ziming Ke"
      "last touch 20200326 - QT"
      "Modified by Juno Hsu and Qi Tang - 4/9/2020"
      "chemUCI + MAM4 for E3SM"
@@ -40,8 +40,10 @@ SPECIES
 * MVKMACR = sum of MVK -> CH2CHCOCH3 + MACR -> CH2CCH3CHO
   MVKO2 -> C4H7O4
   E90 -> O3
-
-
+  N2OLNZ -> N2
+  NOYLNZ -> N
+  CH4LNZ -> CH4
+  H2OLNZ -> H2O
 * MAM4 species
   DMS -> C2H6S
   SO2 -> O2S
@@ -50,6 +52,7 @@ SPECIES
   so4_a1 -> NH4HSO4
   so4_a2 -> NH4HSO4
   so4_a3 -> NH4HSO4
+  so4_a5 -> NH4HSO4
   pom_a1 -> C
 * pom_a2 does not exist
   pom_a3 -> C
@@ -76,6 +79,7 @@ SPECIES
   num_a2 -> H
   num_a3 -> H
   num_a4 -> H
+  num_a5 -> H
  End Solution
 
  Fixed
@@ -94,16 +98,16 @@ Solution Classes
 
  Explicit
    CO, C2H6, C3H8, CH3COCH3
-   E90
+   E90, N2OLNZ, NOYLNZ, CH4LNZ, H2OLNZ
    DMS, SO2, H2SO4, SOAG
-   so4_a1,  so4_a2,  so4_a3
+   so4_a1,  so4_a2,  so4_a3,  so4_a5
    pom_a1,           pom_a3,  pom_a4
    soa_a1,  soa_a2,  soa_a3
    bc_a1,            bc_a3,   bc_a4
    dst_a1,           dst_a3
    ncl_a1,  ncl_a2,  ncl_a3
    mom_a1,  mom_a2,  mom_a3,  mom_a4
-   num_a1,  num_a2,  num_a3,  num_a4
+   num_a1,  num_a2,  num_a3,  num_a4, num_a5
  End Explicit
 
  Implicit
@@ -155,7 +159,7 @@ CHEMISTRY
 [uci1] O3 + H2O -> 2*OH                           ; 1.630E-10, 60
 *   fix typo, exp(-B/T), B=60 (JPL15)
 [uci2] O3 + H2 -> OH + HO2                        ; 1.200E-10,  0
-[uci3] O3 + CH4 -> OH + CH3OO                     ; 1.750E-10,  0
+[uci3] O3 + CH4LNZ -> OH + CH3OO                     ; 1.750E-10,  0
 *  These 3 rates for O(1D) rxt w/ H2O, H2, CH4 are scaled with jo1d and divided
 *     by the key quenching rates are: N2 = 3.30e-11 exp(55/T), O2 = 2.15e-11 exp(110/T)
 *     and H2O = 1.63e-10 exp(60/T), and then multiplied by the rates above.
@@ -165,7 +169,7 @@ CHEMISTRY
 [lco_h]      CO + OH -> H                                   ; 1.500E-13,  0
 [lco_ho2]    CO + OH + M -> HO2 + M                         ; 5.90e-33, 1.0, 1.10E-12, -1.3, 0.6
 [lh2_ho2]    H2 + OH -> HO2 + H2O                           ; 2.800E-12, -1800
-[lch4]       CH4 + OH -> CH3O2 + H2O                        ; 2.450E-12, -1775
+[lch4]       CH4LNZ + OH -> CH3O2 + H2O                     ; 2.450E-12, -1775
 [lc2h6]      C2H6 + OH -> C2H5O2                            ; 7.660E-12, -1020
 [lc3h8]      C3H8 + OH -> HO2 + 0.80*CH3COCH3 + 0.20*CH3CHO ; 8.700E-12, -615
 [lc2h4_oh]   C2H4 + OH + M -> ROHO2                         ; 1.10E-28, 3.5, 8.40E-12, 1.75, 0.6
